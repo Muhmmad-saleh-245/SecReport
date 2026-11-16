@@ -1,0 +1,6 @@
+GET /search?q=%27 HTTP/1.1
+Host: portal.acme.test
+
+HTTP/1.1 500
+
+You have an error in your SQL syntax near '''' at line 1

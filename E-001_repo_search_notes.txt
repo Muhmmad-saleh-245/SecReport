@@ -1,0 +1,2 @@
+Search: org:acme-ltd AKIA
+Result: 1 file, commit a1b2c3d, key id redacted
