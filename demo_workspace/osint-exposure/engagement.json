@@ -1,0 +1,323 @@
+{
+  "name": "Acme External Exposure Review",
+  "client": "Acme Ltd (fictional)",
+  "report_type": "osint",
+  "tester": "Muhammad Saleh, Cybersecurity Researcher",
+  "classification": "CONFIDENTIAL",
+  "brand_name": "",
+  "brand_color": "#0f172a",
+  "brand_logo_path": "",
+  "summary": "This review looked at what an outsider can learn about Acme Ltd from public sources only. It found exposed credentials in public breach data, a leaked access key in a public code repository and weak email authentication. No system was accessed.",
+  "methodology": "Sources: public DNS and certificate transparency records, public code hosting search, breach notification services, company website and professional networking pages. All collection was passive. Each finding is graded for source reliability (A-F) and information credibility (1-6).",
+  "scope": {
+    "in_scope": [
+      "*.acme.test",
+      "acme.test"
+    ],
+    "out_of_scope": [],
+    "start_date": "2026-10-01",
+    "end_date": "2026-12-31",
+    "authorization_ref": "Client authorization letter 2026-09-30 (passive OSINT only)",
+    "rules_of_engagement": "No denial-of-service. Business hours only. No real customer data."
+  },
+  "findings": [
+    {
+      "id": "F-001",
+      "title": "Secrets exposed in a public code repository",
+      "cvss_vector": "",
+      "manual_severity": "High",
+      "cwe": "CWE-798",
+      "owasp": "",
+      "mitre": [
+        "T1593"
+      ],
+      "affected_assets": [
+        "acme.test"
+      ],
+      "description": "A cloud access key belonging to Acme was committed to a public repository and remained in the commit history.",
+      "impact": "Anyone could use the key to reach the cloud account until it is revoked.",
+      "steps_to_reproduce": "",
+      "remediation": "Revoke and rotate the exposed secrets, remove them from history, and add secret scanning to the development workflow.",
+      "references": [
+        "https://cwe.mitre.org/data/definitions/798.html",
+        "https://attack.mitre.org/techniques/T1593/"
+      ],
+      "evidence_ids": [
+        "E-001"
+      ],
+      "status": "open",
+      "source_reliability": "B",
+      "info_credibility": "2",
+      "sources": [
+        "Public code hosting repository, commit from 2026-08-14 (collected 2026-10-09)"
+      ],
+      "tags": [
+        "library:osint-code-secrets"
+      ],
+      "retest_notes": "",
+      "ai_assisted": false,
+      "approved": true,
+      "approved_by": "Priya Sharma (Senior Reviewer)",
+      "approved_at": "2026-11-17T08:20:33+00:00",
+      "created_at": "2026-11-17T08:20:33+00:00",
+      "updated_at": "2026-11-17T08:20:33+00:00"
+    },
+    {
+      "id": "F-002",
+      "title": "Organisation credentials found in public breach data",
+      "cvss_vector": "",
+      "manual_severity": "High",
+      "cwe": "",
+      "owasp": "",
+      "mitre": [
+        "T1589"
+      ],
+      "affected_assets": [
+        "acme.test"
+      ],
+      "description": "12 e-mail addresses on the acme.test domain appear in a public breach collection together with passwords.",
+      "impact": "Reused passwords may let attackers sign in to company services.",
+      "steps_to_reproduce": "",
+      "remediation": "Force password resets for affected accounts, enforce multi-factor authentication and monitor breach notifications.",
+      "references": [
+        "https://attack.mitre.org/techniques/T1589/"
+      ],
+      "evidence_ids": [],
+      "status": "open",
+      "source_reliability": "B",
+      "info_credibility": "1",
+      "sources": [
+        "Breach notification service lookup (collected 2026-10-12)"
+      ],
+      "tags": [
+        "library:osint-leaked-credentials"
+      ],
+      "retest_notes": "",
+      "ai_assisted": false,
+      "approved": true,
+      "approved_by": "Priya Sharma (Senior Reviewer)",
+      "approved_at": "2026-11-17T08:20:33+00:00",
+      "created_at": "2026-11-17T08:20:33+00:00",
+      "updated_at": "2026-11-17T08:20:33+00:00"
+    },
+    {
+      "id": "F-003",
+      "title": "Weak or missing email authentication (SPF/DKIM/DMARC)",
+      "cvss_vector": "",
+      "manual_severity": "Medium",
+      "cwe": "",
+      "owasp": "",
+      "mitre": [
+        "T1566"
+      ],
+      "affected_assets": [
+        "acme.test"
+      ],
+      "description": "The domain publishes an SPF record but no DMARC policy, so spoofed e-mail is not rejected.",
+      "impact": "Attackers may be able to send spoofed email that appears to come from the organisation.",
+      "steps_to_reproduce": "",
+      "remediation": "Publish SPF and DKIM records and move DMARC to an enforcing policy after monitoring.",
+      "references": [
+        "https://attack.mitre.org/techniques/T1566/"
+      ],
+      "evidence_ids": [],
+      "status": "open",
+      "source_reliability": "A",
+      "info_credibility": "1",
+      "sources": [
+        "Public DNS TXT records (collected 2026-10-05)"
+      ],
+      "tags": [
+        "library:osint-email-auth"
+      ],
+      "retest_notes": "",
+      "ai_assisted": false,
+      "approved": true,
+      "approved_by": "Priya Sharma (Senior Reviewer)",
+      "approved_at": "2026-11-17T08:20:33+00:00",
+      "created_at": "2026-11-17T08:20:33+00:00",
+      "updated_at": "2026-11-17T08:20:33+00:00"
+    },
+    {
+      "id": "F-004",
+      "title": "Forgotten or unmonitored subdomains",
+      "cvss_vector": "",
+      "manual_severity": "Low",
+      "cwe": "",
+      "owasp": "",
+      "mitre": [
+        "T1596"
+      ],
+      "affected_assets": [
+        "old-portal.acme.test"
+      ],
+      "description": "old-portal.acme.test appears in certificate transparency logs and its web page has not changed since 2023.",
+      "impact": "Neglected hosts widen the attack surface and can be taken over if DNS records dangle.",
+      "steps_to_reproduce": "",
+      "remediation": "Maintain an asset inventory, remove stale DNS records and retire unused hosts.",
+      "references": [
+        "https://attack.mitre.org/techniques/T1596/"
+      ],
+      "evidence_ids": [],
+      "status": "open",
+      "source_reliability": "A",
+      "info_credibility": "3",
+      "sources": [
+        "Certificate transparency logs (collected 2026-10-05)"
+      ],
+      "tags": [
+        "library:osint-subdomain-exposure"
+      ],
+      "retest_notes": "",
+      "ai_assisted": false,
+      "approved": true,
+      "approved_by": "Priya Sharma (Senior Reviewer)",
+      "approved_at": "2026-11-17T08:20:33+00:00",
+      "created_at": "2026-11-17T08:20:33+00:00",
+      "updated_at": "2026-11-17T08:20:33+00:00"
+    },
+    {
+      "id": "F-005",
+      "title": "Look-alike domains registered",
+      "cvss_vector": "",
+      "manual_severity": "Medium",
+      "cwe": "",
+      "owasp": "",
+      "mitre": [
+        "T1583"
+      ],
+      "affected_assets": [
+        "acme.test"
+      ],
+      "description": "acme-corp.example was registered by a third party two weeks ago and resolves to a parked page.",
+      "impact": "Look-alike domains can be used for phishing or brand abuse.",
+      "steps_to_reproduce": "",
+      "remediation": "Monitor new registrations, consider defensive registrations and use takedown procedures where abuse is confirmed.",
+      "references": [
+        "https://attack.mitre.org/techniques/T1583/"
+      ],
+      "evidence_ids": [],
+      "status": "open",
+      "source_reliability": "B",
+      "info_credibility": "3",
+      "sources": [
+        "Public WHOIS and DNS data (collected 2026-10-12)"
+      ],
+      "tags": [
+        "library:osint-lookalike-domains"
+      ],
+      "retest_notes": "",
+      "ai_assisted": false,
+      "approved": true,
+      "approved_by": "Priya Sharma (Senior Reviewer)",
+      "approved_at": "2026-11-17T08:20:33+00:00",
+      "created_at": "2026-11-17T08:20:33+00:00",
+      "updated_at": "2026-11-17T08:20:33+00:00"
+    },
+    {
+      "id": "F-006",
+      "title": "Employee information publicly discoverable",
+      "cvss_vector": "",
+      "manual_severity": "Info",
+      "cwe": "",
+      "owasp": "",
+      "mitre": [
+        "T1589",
+        "T1591"
+      ],
+      "affected_assets": [
+        "acme.test"
+      ],
+      "description": "Staff names and job titles for the finance team are listed on professional networking sites.",
+      "impact": "The information can support targeted phishing and social engineering.",
+      "steps_to_reproduce": "",
+      "remediation": "Review what staff and the company publish, provide awareness training and apply email filtering.",
+      "references": [
+        "https://attack.mitre.org/techniques/T1589/",
+        "https://attack.mitre.org/techniques/T1591/"
+      ],
+      "evidence_ids": [],
+      "status": "open",
+      "source_reliability": "C",
+      "info_credibility": "2",
+      "sources": [
+        "Professional networking site search (collected 2026-10-10)"
+      ],
+      "tags": [
+        "library:osint-employee-info"
+      ],
+      "retest_notes": "",
+      "ai_assisted": false,
+      "approved": false,
+      "approved_by": "",
+      "approved_at": "",
+      "created_at": "2026-11-17T08:20:33+00:00",
+      "updated_at": "2026-11-17T08:20:33+00:00"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E-001",
+      "filename": "repo_search_notes.txt",
+      "stored_as": "evidence/E-001_repo_search_notes.txt",
+      "sha256": "c7b98b04fcb24db8ccccf36a151c44f306b811c17be6c706df9baf19cd2c1f4b",
+      "size": 73,
+      "description": "Notes from the repository search",
+      "added_at": "2026-11-17T08:20:33+00:00",
+      "finding_ids": [
+        "F-001"
+      ]
+    }
+  ],
+  "objectives": [
+    "Identify internet-facing assets that Acme may not be tracking",
+    "Find publicly exposed credentials or secrets",
+    "Assess how easily staff can be targeted by social engineering"
+  ],
+  "timeline": [
+    {
+      "date": "2026-10-05",
+      "title": "Collection started",
+      "detail": "Passive DNS and certificate review",
+      "source": "crt.sh, passive DNS"
+    },
+    {
+      "date": "2026-10-09",
+      "title": "Leaked key found",
+      "detail": "Access key in a public repository commit",
+      "source": "Public code hosting"
+    },
+    {
+      "date": "2026-10-12",
+      "title": "Breach exposure confirmed",
+      "detail": "12 staff e-mail addresses in a public breach collection",
+      "source": "Breach notification service"
+    }
+  ],
+  "entities": [
+    {
+      "name": "acme.test",
+      "type": "Domain",
+      "confidence": "High",
+      "notes": "Primary domain"
+    },
+    {
+      "name": "old-portal.acme.test",
+      "type": "Subdomain",
+      "confidence": "Medium",
+      "notes": "Appears unmaintained"
+    },
+    {
+      "name": "acme-corp.example",
+      "type": "Domain",
+      "confidence": "Low",
+      "notes": "Look-alike registered by a third party"
+    }
+  ],
+  "detection_gaps": [],
+  "attack_narrative": "",
+  "recommendations": "Treat exposed secrets as compromised: rotate them first, then investigate. Set up continuous monitoring for new subdomains and breach exposures.",
+  "program": "",
+  "created_at": "2026-11-17T08:20:33+00:00",
+  "updated_at": "2026-11-17T08:20:33+00:00"
+}

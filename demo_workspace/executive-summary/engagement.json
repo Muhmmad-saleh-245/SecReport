@@ -1,0 +1,180 @@
+{
+  "name": "Acme Security Summary Q4",
+  "client": "Acme Ltd (fictional)",
+  "report_type": "executive",
+  "tester": "Muhammad Saleh, Cybersecurity Researcher",
+  "classification": "CONFIDENTIAL",
+  "brand_name": "",
+  "brand_color": "#0f172a",
+  "brand_logo_path": "",
+  "summary": "This summary combines the results of the Q4 portal test, the external exposure review and the red team exercise. The business should act first on the exposed access key, the customer data access flaw and the lack of monitoring of VPN sign-ins.",
+  "methodology": "",
+  "scope": {
+    "in_scope": [
+      "*.acme.test",
+      "acme.test"
+    ],
+    "out_of_scope": [],
+    "start_date": "2026-10-01",
+    "end_date": "2026-12-31",
+    "authorization_ref": "Signed Statement of Work SOW-2026-114",
+    "rules_of_engagement": "No denial-of-service. Business hours only. No real customer data."
+  },
+  "findings": [
+    {
+      "id": "F-001",
+      "title": "Secrets exposed in a public code repository",
+      "cvss_vector": "",
+      "manual_severity": "High",
+      "cwe": "CWE-798",
+      "owasp": "",
+      "mitre": [
+        "T1593"
+      ],
+      "affected_assets": [
+        "acme.test"
+      ],
+      "description": "A cloud access key was found in a public code repository.",
+      "impact": "A cloud account key was public. Anyone could have used it to reach company data until it is revoked.",
+      "steps_to_reproduce": "",
+      "remediation": "Revoke and rotate the exposed secrets, remove them from history, and add secret scanning to the development workflow.",
+      "references": [
+        "https://cwe.mitre.org/data/definitions/798.html",
+        "https://attack.mitre.org/techniques/T1593/"
+      ],
+      "evidence_ids": [],
+      "status": "open",
+      "source_reliability": "",
+      "info_credibility": "",
+      "sources": [
+        "TODO: add source URL / database and date collected"
+      ],
+      "tags": [
+        "library:osint-code-secrets"
+      ],
+      "retest_notes": "",
+      "ai_assisted": false,
+      "approved": true,
+      "approved_by": "Priya Sharma (Senior Reviewer)",
+      "approved_at": "2026-11-17T08:20:33+00:00",
+      "created_at": "2026-11-17T08:20:33+00:00",
+      "updated_at": "2026-11-17T08:20:33+00:00"
+    },
+    {
+      "id": "F-002",
+      "title": "Insecure direct object reference (IDOR)",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+      "manual_severity": "",
+      "cwe": "CWE-639",
+      "owasp": "A01:2021 Broken Access Control",
+      "mitre": [],
+      "affected_assets": [
+        "portal.acme.test"
+      ],
+      "description": "The invoice endpoint does not check who is asking.",
+      "impact": "Any customer could read other customers' invoices, which is a data protection risk.",
+      "steps_to_reproduce": "1. TODO: state the exact URL / endpoint tested.\n\n2. TODO: describe the request, parameter and test input used.\n\n3. TODO: describe the observed response that proves the issue.",
+      "remediation": "Enforce object-level authorisation on every request on the server side and avoid relying on hard-to-guess identifiers as protection.",
+      "references": [
+        "https://cwe.mitre.org/data/definitions/639.html",
+        "https://owasp.org/Top10/A01_2021-Broken_Access_Control/"
+      ],
+      "evidence_ids": [],
+      "status": "open",
+      "source_reliability": "",
+      "info_credibility": "",
+      "sources": [],
+      "tags": [
+        "library:web-idor"
+      ],
+      "retest_notes": "",
+      "ai_assisted": false,
+      "approved": true,
+      "approved_by": "Priya Sharma (Senior Reviewer)",
+      "approved_at": "2026-11-17T08:20:33+00:00",
+      "created_at": "2026-11-17T08:20:33+00:00",
+      "updated_at": "2026-11-17T08:20:33+00:00"
+    },
+    {
+      "id": "F-003",
+      "title": "Lateral movement not detected",
+      "cvss_vector": "",
+      "manual_severity": "Medium",
+      "cwe": "",
+      "owasp": "",
+      "mitre": [
+        "T1021"
+      ],
+      "affected_assets": [
+        "acme.test"
+      ],
+      "description": "Remote access and file activity is not monitored.",
+      "impact": "An attacker could move through the network for days without anyone noticing.",
+      "steps_to_reproduce": "",
+      "remediation": "Improve endpoint and network telemetry, tune detections for remote service use and rehearse the response.",
+      "references": [
+        "https://attack.mitre.org/techniques/T1021/"
+      ],
+      "evidence_ids": [],
+      "status": "open",
+      "source_reliability": "",
+      "info_credibility": "",
+      "sources": [],
+      "tags": [
+        "library:rt-detection-gap"
+      ],
+      "retest_notes": "",
+      "ai_assisted": false,
+      "approved": true,
+      "approved_by": "Priya Sharma (Senior Reviewer)",
+      "approved_at": "2026-11-17T08:20:33+00:00",
+      "created_at": "2026-11-17T08:20:33+00:00",
+      "updated_at": "2026-11-17T08:20:33+00:00"
+    },
+    {
+      "id": "F-004",
+      "title": "Missing HTTP Strict Transport Security (HSTS)",
+      "cvss_vector": "",
+      "manual_severity": "Low",
+      "cwe": "CWE-319",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "mitre": [],
+      "affected_assets": [
+        "www.acme.test"
+      ],
+      "description": "A browser hardening setting is missing on the public website.",
+      "impact": "Users on hostile networks may be downgraded to unencrypted HTTP.",
+      "steps_to_reproduce": "",
+      "remediation": "Send Strict-Transport-Security: max-age=31536000; includeSubDomains once all subdomains support HTTPS.",
+      "references": [
+        "https://cwe.mitre.org/data/definitions/319.html",
+        "https://owasp.org/Top10/A05_2021-Security_Misconfiguration/"
+      ],
+      "evidence_ids": [],
+      "status": "open",
+      "source_reliability": "",
+      "info_credibility": "",
+      "sources": [],
+      "tags": [
+        "library:web-missing-hsts"
+      ],
+      "retest_notes": "",
+      "ai_assisted": false,
+      "approved": true,
+      "approved_by": "Priya Sharma (Senior Reviewer)",
+      "approved_at": "2026-11-17T08:20:33+00:00",
+      "created_at": "2026-11-17T08:20:33+00:00",
+      "updated_at": "2026-11-17T08:20:33+00:00"
+    }
+  ],
+  "evidence": [],
+  "objectives": [],
+  "timeline": [],
+  "entities": [],
+  "detection_gaps": [],
+  "attack_narrative": "",
+  "recommendations": "1. Rotate exposed secrets this week.\n\n2. Fix the invoice access flaw before the billing release.\n\n3. Fund 24x7 monitoring of VPN and file server activity.",
+  "program": "",
+  "created_at": "2026-11-17T08:20:33+00:00",
+  "updated_at": "2026-11-17T08:20:33+00:00"
+}
