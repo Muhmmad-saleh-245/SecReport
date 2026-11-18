@@ -1,5 +1,7 @@
 # SecReport
 
+[![tests](https://github.com/Muhmmad-saleh-245/SecReport/actions/workflows/tests.yml/badge.svg)](https://github.com/Muhmmad-saleh-245/SecReport/actions/workflows/tests.yml) [![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
 One platform that turns authorized security work into professional client reports:
 **OSINT, Red Team, Web Pentest, Bug Bounty, and an Executive Summary.**
 
@@ -74,3 +76,7 @@ CVSS v4.0 scoring follows FIRST's published specification and reference calculat
 their metric groups (CVSS-B, CVSS-BT, CVSS-BE or CVSS-BTE); share the vector alongside the score.
 For SARIF logs containing local file paths rather than absolute HTTP(S) artifact URIs, provide `--asset` (or the
 web form's default target). The supplied target is still checked against the engagement scope.
+
+## License
+
+MIT - see [LICENSE](LICENSE).
